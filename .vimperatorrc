@@ -1,0 +1,30 @@
+"Firefox 4.0
+"Vimperator 3.0 (created: 2011/03/06 21:43:45)
+
+"-------------------------------------------------- 
+" 基本設定
+"--------------------------------------------------
+" ブラウザタイトルの変更
+set titlestring=Firefox
+" Tabのみ表示
+set gui=tabs
+" ページ全体で検索語を協調表示
+set hlsearch
+" ビープ音を鳴らさずビジュアルベルを使用
+" set visualbell
+
+"--------------------------------------------------
+" キーマップ
+"--------------------------------------------------
+" j/kで5行分移動
+nnoremap j 5<C-e>
+nnoremap k 5<C-y>
+" h/lでタブを移動
+nnoremap h <C-p>
+nnoremap l <C-n>
+" yで選択範囲をコピー
+nnoremap y :echo 'Yank!'<CR>Y
+"<BS>で「戻る」
+nnoremap <BS> H
+
+" vim: set ft=vimperator:
