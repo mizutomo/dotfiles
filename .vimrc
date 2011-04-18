@@ -482,10 +482,10 @@ inoremap <expr> ,dt strftime('%H:%M:%S')
 "  その他 Misc
 " --------------------------------------------------
 " C-;がEscape
-inoremap <C-m> <Esc>
-cnoremap <C-m> <Esc>
-vnoremap <C-m> <Esc>
-
+inoremap jj <Esc>
+cnoremap jj <Esc>
+vnoremap jj <Esc>
+"
 " ;でコマンド入力(;と:を入れ替え)
 nnoremap ; :
 nnoremap : ;
