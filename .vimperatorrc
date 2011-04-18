@@ -31,6 +31,10 @@ nnoremap <BS> H
 nnoremap ; :
 nnoremap : ;
 
+" C-;がEscape
+inoremap jj <Esc>
+cnoremap jj <Esc>
+
 " Hatena BookMard
 javascript if (typeof hBookmark != 'undefined') liberator.loadScript('chrome://hatenabookmark/content/vimperator/plugin/hatenabookmark.js',  {__proto__: this});
 

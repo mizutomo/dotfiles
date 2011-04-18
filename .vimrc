@@ -484,7 +484,6 @@ inoremap <expr> ,dt strftime('%H:%M:%S')
 " C-;がEscape
 inoremap jj <Esc>
 cnoremap jj <Esc>
-vnoremap jj <Esc>
 "
 " ;でコマンド入力(;と:を入れ替え)
 nnoremap ; :
