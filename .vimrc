@@ -193,7 +193,7 @@ else
   set tags=./tags,./../tags,./*/tags,./../../tags,./../../../tags,./../../../../tags,./../../../../../tags
 endif
 
-"<C-t>はscreentとかぶるので削除
+"<C-t>はscreenとかぶるので削除
 "tab pagesを使い易くする
 " nnoremap <C-t>  <Nop>
 " nnoremap <C-t>n  ;<C-u>tabnew<CR>
@@ -219,7 +219,7 @@ nnoremap tl  ;<C-u>tags<CR>
 set wrapscan     " 最後まで検索したら、先頭へ戻る
 set ignorecase   " 大文字小文字無視
 set smartcase    " 検索文字列に大文字が含まれている場合は区別して検索する
-"set incsearch    " インクリメンタルサーチ
+set incsearch    " インクリメンタルサーチ
 set hlsearch     " 検索文字をハイライト
 "Escの2回押しでハイライト消去
 nmap <Esc><Esc> ;nohlsearch<CR><Esc>
@@ -481,6 +481,11 @@ inoremap <expr> ,dt strftime('%H:%M:%S')
 " --------------------------------------------------
 "  その他 Misc
 " --------------------------------------------------
+" C-;がEscape
+inoremap <C-m> <Esc>
+cnoremap <C-m> <Esc>
+vnoremap <C-m> <Esc>
+
 " ;でコマンド入力(;と:を入れ替え)
 nnoremap ; :
 nnoremap : ;
@@ -494,33 +499,6 @@ nnoremap : ;
 " --------------------------------------------------
 let g:changelog_timeformat="%c"
 let g:changelog_username="Tomokatsu Mizukusa <mizukusa.tomokatsu@gmail.com>"
-"
-"
-" プログラミングヘルプ系
-"
-"" カラー表示
-syntax on
-"" オートインデント
-set smartindent
-"" tab関連
-""" タブの代わりに空白文字挿入
-set expandtab
-""" ファイルを開いた際に、前回終了時の行で起動
+
+"" ファイルを開いた際に、前回終了時の行で起動
 autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
-"
-"
-" 検索系
-"
-"" 検索文字列が小文字の場合は大文字小文字区別なく検索する
-set ignorecase
-"" 検索文字列入力時に順次対象文字列にヒットさせない
-set noincsearch
-"" 検索結果文字列のハイライト表示
-set hlsearch
-"" インクリメンタルサーチ
-"set incsearch
-"
-"
-" キーマップ
-"
-"" jjを連打するとNormal Modeに移行(Escの代わり)

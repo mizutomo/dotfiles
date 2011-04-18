@@ -1,7 +1,7 @@
 "Firefox 4.0
 "Vimperator 3.0 (created: 2011/03/06 21:43:45)
 
-"-------------------------------------------------- 
+"--------------------------------------------------
 " 基本設定
 "--------------------------------------------------
 " ブラウザタイトルの変更
@@ -26,5 +26,12 @@ nnoremap l <C-n>
 nnoremap y :echo 'Yank!'<CR>Y
 "<BS>で「戻る」
 nnoremap <BS> H
+
+" ;でコマンド入力(;と:を入れ替え)
+nnoremap ; :
+nnoremap : ;
+
+" Hatena BookMard
+javascript if (typeof hBookmark != 'undefined') liberator.loadScript('chrome://hatenabookmark/content/vimperator/plugin/hatenabookmark.js',  {__proto__: this});
 
 " vim: set ft=vimperator:
