@@ -437,7 +437,7 @@ vnoremap p <Esc>;let current_reg = @"<CR>gvdi<C-R>=current_reg<CR><Esc>
 set expandtab
 "
 " コンマの後に自動的にスペースを挿入
-inoremap , ,<Space>
+" inoremap , ,<Space>
 " XMLの閉じタグを自動挿入
 augroup MyXML
   autocmd!
