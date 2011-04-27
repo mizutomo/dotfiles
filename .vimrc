@@ -553,10 +553,10 @@ function! g:my_emptycmd(cmdline,  context)
   return a:cmdline
 endfunction
 function! g:my_preprompt(args,  context)
-  call vimshell#execute('echo "preprompt"')
+"  call vimshell#execute('echo "preprompt"')
 endfunction
 function! g:my_preexec(cmdline,  context)
-  call vimshell#execute('echo "preexec"')
+"  call vimshell#execute('echo "preexec"')
   if a:cmdline =~# '^\s*diff\>'
     call vimshell#set_syntax('diff')
   endif
