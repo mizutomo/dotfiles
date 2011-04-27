@@ -59,8 +59,22 @@ fpath=($fpath ~/.zfunc)
 typeset -U path cdpath fpath manpath
 
 ## プロンプトの設定
-PROMPT='%n%# '
+PROMPT="%# "
 RPROMPT=' %~'
+# PROMPT="[%{$fg_bold[cyan]%}INS%{$reset_color%}] %{$fg_bold[black]%}%%%{$reset_color%} "
+# function zle-line-init zle-keymap-select {
+  # case $KEYMAP in
+    # vicmd)
+      # PROMPT="[%{$fg_bold[red]%}NOR%{$reset_color%}] %{$fg_bold[black]%}%%%{$reset_color%} "
+      # ;;
+    # main|viins)
+      # PROMPT="[%{$fg_bold[cyan]%}INS%{$reset_color%}] %{$fg_bold[black]%}%%%{$reset_color%} "
+      # ;;
+  # esac
+  # zle reset-prompt
+# }
+# zle -N zle-line-init
+# zle -N zle-keymap-select
 
 ## manマニュアルに配置されているディレクトリパス
 manpath=($X11HOME/man /usr/man /usr/lang/man /usr/local/man /opt/local/man)
@@ -77,7 +91,7 @@ SAVEHIST=100000
 HISTFILE=~/.zhistory
 DIRSTACKSIZE=100
 
-## 
+##
 ## zshオプションの設定(_の有無/大文字、小文字は無視)
 ##
 ## ヒストリ関連
@@ -113,7 +127,7 @@ setopt listtypes          # 補完候補を表示する際に、ファイルの�
 
 ## zshモジュールのロード
 zmodload -a zsh/stat stat          # statコマンド
-zmodload -a zsh/zpty zpty          
+zmodload -a zsh/zpty zpty
 zmodload -a zsh/zprof zprof
 zmodload -ap zsh/mapfile mapfile
 
@@ -134,31 +148,13 @@ colors
 ## GNUPLOTの出力先
 export GNUTERM=x11
 
-## Intel TBB (Threading Building Block)
-export TBB21_INSTALL_DIR=/opt/local/tbb
-source $TBB21_INSTALL_DIR/ia32/cc4.0.1_os10.4.9/bin/tbbvars.sh
+## Localな環境設定ファイルがあれば、それをロードする
+if [ -f $HOME/.zshrc.local ]; then
+  source $HOME/.zshrc.local
+fi
 
-## CUDAの設定
-export PATH=/usr/local/cuda/bin:$PATH
-export CPLUS_INCLUDE_PATH="/Developer/GPU Computing/C/common/inc":/usr/local/cuda/include:$CPLUS_INCLUDE_PATH
-export C_INCLUDE_PATH="/Developer/GPU Computing/C/common/inc":/usr/local/cuda/include:$C_INCLUDE_PATH
-export LIBRARY_PATH="/Developer/GPU Computing/C/common/lib":"/Developer/GPU Computing/C/lib":/usr/local/lib:$LIBRARY_PATH
-export DYLD_LIBRARY_PATH=/usr/local/cuda/lib:$DYLD_LIBRARY_PATH
-export LD_LIBRARY_PATH=/usr/local/cuda/lib:$LD_LIBRARY_PATH
-
-## Latex Pathの追加
-export PATH=/Applications/pTeX.app/teTeX/bin:$PATH
-export PATH=/usr/local/texlive/2010/bin/universal-darwin:$PATH
-
-## Emacsの設定
-export PATH=/Applications/Emacs.app/Contents/MacOS/bin:$PATH
-alias emacs='/Applications/Emacs.app/Contents/MacOS/Emacs -r'
-alias ec='emacsclient'
-
-## Emacsからシェルを利用するときの設定
+# Emacsからシェルを利用するときの設定
 [[ $EMACS = t ]] && unsetopt zle
 [[ $TERM = "eterm-color" ]] && TERM=xterm-color
 
-## Python Scripting for Computational Science
-export scripting=$HOME/Program/NumPython
-export PATH=/Library/Frameworks/Python.framework/Versions/2.6/bin:$PATH
+
