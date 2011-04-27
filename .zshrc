@@ -80,12 +80,7 @@ RPROMPT=' %~'
 manpath=($X11HOME/man /usr/man /usr/lang/man /usr/local/man /opt/local/man)
 export MANPATH
 
-## EDITOR
-export EDITOR=/Applications/MacVim.app/Contents/MacOS/Vim
-alias vi='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
-alias vim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
-
-## その他の環境変数の定義
+# その他の環境変数の定義
 HISTSIZE=2000
 SAVEHIST=100000
 HISTFILE=~/.zhistory
