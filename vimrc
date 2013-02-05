@@ -445,7 +445,7 @@ vnoremap p <Esc>;let current_reg = @"<CR>gvdi<C-R>=current_reg<CR><Esc>
 set expandtab
 "
 " コンマの後に自動的にスペースを挿入
-inoremap , ,<Space>
+" inoremap , ,<Space>
 " XMLの閉じタグを自動挿入
 augroup MyXML
   autocmd!
@@ -661,6 +661,21 @@ au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>q
 " --------------------------------------------------
 let g:changelog_timeformat="%c"
 let g:changelog_username="Tomokatsu Mizukusa <mizukusa.tomokatsu@gmail.com>"
+
+" --------------------------------------------------
+"  TwitVim
+" --------------------------------------------------
+let twitvim_count=100
+nnoremap ,tp :<C-u>PosttoTwitter<CR>
+nnoremap ,tf :<C-u>FriendsTwitter<CR><C-w>j
+nnoremap ,tu :<C-u>UserTwitter<CR><C-w>j
+nnoremap ,tr :<C-u>RepliesTwitter<CR><C-w>j
+nnoremap ,tn :<C-u>NextTwitter<CR>
+
+autocmd FileType twitvim call s:twitvim_my_settings()
+function! s:twitvim_my_settings()
+  set nowrap
+endfunction
 
 "" ファイルを開いた際に、前回終了時の行で起動
 autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif

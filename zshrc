@@ -145,3 +145,9 @@ if [ -d /svtool/cuda/41/cuda ]; then
   export PATH=${CUDA_INSTALL_DIR}/bin:$PATH
   export LD_LIBRARY_PATH=${CUDA_INSTALL_DIR}/lib64:${CUDA_INSTALL_DIR}/lib:${CUDA_INSTALL_DIR}/libnvvp:${CUDA_INSTALL_DIR}/../sdk/C/lib:$LD_LIBRARY_PATH
 fi
+
+## Localな環境設定ファイルがあれば、それをロードする
+if [ -f $HOME/.zshrc.local ]; then
+  source $HOME/.zshrc.local
+fi
+
