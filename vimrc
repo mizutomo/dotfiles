@@ -1,13 +1,38 @@
 " $HOME/.vimrc
 "   Created at 2010.10.04
-"   Revised at 2011.04.11
+"   Revised at 2013.02.05
+
+"--------------------------------------------------
+" Neobundle.vimの設定
+"--------------------------------------------------
+set nocompatible
+filetype off
+
+if has('vim_starting')
+  set runtimepath+=~/.vim/neobundle.vim
+  call neobundle#rc(expand('~/.bundle'))
+endif
+
+" 自動でリポジトリと同期するプラグイン
+NeoBundle 'git://github.com/Shougo/neocomplecache.git'
+NeoBundle 'git://github.com/Shougo/neobundle.vim.git'
+NeoBundle 'git://github.com/Shougo/vimproc.vim.git'
+NeoBundle 'git://github.com/Shougo/unite.vim.git'
+NeoBundle 'git://github.com/Shougo/vimfiler.git'
+NeoBundle 'git://github.com/Shougo/vimshell.git'
+NeoBundle 'git://github.com/tpope/vim-surround.git'
+NeoBundle 'git://github.com/tpope/vim-repeat.git'
+NeoBundle 'git://github.com/vim-jp/vimdoc-ja.git'
+
+filetype plugin on
+filetype indent on
 
 "--------------------------------------------------
 " 基本設定 Basic
 "--------------------------------------------------
 set nocompatible        " vi非互換
 let mapleader=","       " キーマップリーダー
-set scrolloff=5         " スクロール時の余白確保
+
 set textwidth=0         " 1行に長い文章を書いていても自動折り返しをしない
 set nobackup            " バックアップを取らない
 set autoread            " 他で書き換えられたら自動で読みなおす
@@ -21,7 +46,9 @@ set whichwrap=b,s,h,l,<,>,[,]   " カーソルの行頭、行末で止まらな�
 set showcmd             " コマンドをステータス行に表示
 set showmode            " 現在のモードを表示
 set viminfo='50,<1000,s100,\"50  " viminfoファイルの設定
-set modelines=0         " モードラインは無効
+set modeline            " モードラインを有効に
+"set modelines=0         " モードラインは無効
+set helplang=ja,en     " ヘルプの検索を 日本語->英語 に
 
 " OSのクリップボードを使用する
 " set clipboard+=unnamed   Yank/Pasteができなくなったので、コメントアウト
@@ -38,15 +65,6 @@ imap <C-K> <ESC>"*pa
 " Ev/Rvでvimrcの編集と反映
 command! Ev edit $MYVIMRC
 command! Rv source $MYVIMRC
-
-" pathogenでftdetectなどをloadさせるために、一度ファイルタイプ判定をoff
-filetype off
-" pathogen.vimによってbundle配下のpluginをpathに加える
-call pathogen#runtime_append_all_bundles()
-call pathogen#helptags()
-set helpfile=$VIMRUNTIME/doc/help.txt
-" ファイルタイプ判定をon
-filetype plugin on
 
 " --------------------------------------------------
 "  ステータスライン StausLine
@@ -65,37 +83,37 @@ endif
 
 "入力モード時、ステータスラインのカラーを変更
 augroup InsertHook
-    autocmd!
-    autocmd InsertEnter * highlight StatusLine guifg=#ccdc90 guibg=#2E4340
-    autocmd InsertLeave * highlight StatusLine guifg=#2E4340 guibg=#ccdc90
+  autocmd!
+  autocmd InsertEnter * highlight StatusLine guifg=#ccdc90 guibg=#2E4340
+  autocmd InsertLeave * highlight StatusLine guifg=#2E4340 guibg=#ccdc90
 augroup END
 
 function! GetB()
-    let c = matchstr(getline('.'), '.', col('.') - 1)
-    let c = iconv(c, &enc, &fenc)
-    return String2Hex(c)
+  let c = matchstr(getline('.'), '.', col('.') - 1)
+  let c = iconv(c, &enc, &fenc)
+  return String2Hex(c)
 endfunction
 " help eval-examples
 " The function Nr2Hex() returns the Hex string of a number.
 func! Nr2Hex(nr)
-    let n = a:nr
-    let r = ""
-    while n
-        let r = '0123456789ABCDEF'[n % 16] . r
-        let n = n / 16
-    endwhile
-    return r
+  let n = a:nr
+  let r = ""
+  while n
+    let r = '0123456789ABCDEF'[n % 16] . r
+    let n = n / 16
+  endwhile
+  return r
 endfunc
 " The function String2Hex() converts each character in a string to a two
 " character Hex string.
 func! String2Hex(str)
-    let out = ''
-    let ix = 0
-    while ix < strlen(a:str)
-        let out = out . Nr2Hex(char2nr(a:str[ix]))
-        let ix = ix + 1
-    endwhile
-    return out
+  let out = ''
+  let ix = 0
+  while ix < strlen(a:str)
+    let out = out . Nr2Hex(char2nr(a:str[ix]))
+    let ix = ix + 1
+  endwhile
+  return out
 endfunc
 
 " --------------------------------------------------
@@ -115,14 +133,10 @@ match ZenkakuSpace /　/
 set cursorline
 " カレントウィンドウのみ罫線を引く
 augroup cch
-    autocmd! cch
-    autocmd WinLeave * set nocursorline
-    autocmd WinEnter,BufRead * set cursorline
+  autocmd! cch
+  autocmd WinLeave * set nocursorline
+  autocmd WinEnter,BufRead * set cursorline
 augroup END
-
-:hi clear CursorLine
-:hi CursorLine gui=underline
-highlight CursorLine ctermbg=white guibg=white
 
 " コマンド実行中は再描画しない
 set lazyredraw
@@ -192,15 +206,6 @@ if has("autochdir")
 else
   set tags=./tags,./../tags,./*/tags,./../../tags,./../../../tags,./../../../../tags,./../../../../../tags
 endif
-
-"<C-t>はscreenとかぶるので削除
-"tab pagesを使い易くする
-" nnoremap <C-t>  <Nop>
-" nnoremap <C-t>n  ;<C-u>tabnew<CR>
-" nnoremap <C-t>c  ;<C-u>tabclose<CR>
-" nnoremap <C-t>o  ;<C-u>tabonly<CR>
-" nnoremap <C-t>j  ;<C-u>execute 'tabnext' 1 + (tabpagenr() + v:count1 - 1) % tabpagenr('$')<CR>
-" nnoremap <C-t>k  gT
 
 "tags-and-searchesを使い易くする
 nnoremap t  <Nop>
@@ -310,6 +315,9 @@ nnoremap <C-j> ;<C-w>j
 nnoremap <C-k> ;<C-k>j
 nnoremap <C-l> ;<C-l>j
 nnoremap <C-h> ;<C-h>j
+
+" bsでバッファ表示
+nnoremap bb :ls<CR>:buf
 
 " --------------------------------------------------
 "  エンコーディング関連 Encoding
@@ -492,22 +500,6 @@ nnoremap : ;
 " --------------------------------------------------
 "  プラグインごとの設定 Plugins
 " --------------------------------------------------
-"
-" --------------------------------------------------
-"  MiniBufExplorer
-" --------------------------------------------------
-" set minibfexp
-let g:miniBufExplMapWindowNavVim=1 "hjklで移動
-let g:miniBufExplSplitBelow=0  " Put new window above
-let g:miniBufExplMapWindowNavArrows=1
-let g:miniBufExplMapCTabSwitchBufs=1
-let g:miniBufExplModSelTarget=1
-let g:miniBufExplSplitToEdge=1
-let g:miniBufExplMaxSize = 10
-
-" :TmでMiniBufExplorerの表示トグル
-command! Mt :TMiniBufExplorer
-
 " --------------------------------------------------
 "  NERD_commneter.vim
 " --------------------------------------------------
@@ -527,53 +519,12 @@ let Grep_Skip_Files = '*.bak *~'
 " --------------------------------------------------
 "  vimshell
 " --------------------------------------------------
-let g:vimshell_user_prompt = 'fnamemodify(getcwd(),  ":~")'
-let g:vimshell_right_prompt = 'vimshell#vcs#info("(%s)-[%b]",  "(%s)-[%b|%a]")'
-let g:vimshell_enable_smart_case = 1
-
-if has('win32') || has('win64')
-  " Display user name on Windows.
-  let g:vimshell_prompt = $USERNAME."% "
-else
-  " Display user name on Linux.
-  let g:vimshell_prompt = $USER."% "
-
-  call vimshell#set_execute_file('bmp, jpg, png, gif',  'gexe eog')
-  call vimshell#set_execute_file('mp3, m4a, ogg',  'gexe amarok')
-  let g:vimshell_execute_file_list['zip'] = 'zipinfo'
-  call vimshell#set_execute_file('tgz, gz',  'gzcat')
-  call vimshell#set_execute_file('tbz, bz2',  'bzcat')
-endif
-
-function! g:my_chpwd(args,  context)
-  call vimshell#execute('echo "chpwd"')
-endfunction
-function! g:my_emptycmd(cmdline,  context)
-  call vimshell#execute('echo "emptycmd"')
-  return a:cmdline
-endfunction
-function! g:my_preprompt(args,  context)
-  call vimshell#execute('echo "preprompt"')
-endfunction
-function! g:my_preexec(cmdline,  context)
-  call vimshell#execute('echo "preexec"')
-  if a:cmdline =~# '^\s*diff\>'
-    call vimshell#set_syntax('diff')
-  endif
-  return a:cmdline
-endfunction
-
-autocmd FileType vimshell
-\ call vimshell#altercmd#define('g',  'git')
-\| call vimshell#altercmd#define('i',  'iexe')
-\| call vimshell#altercmd#define('l',  'll')
-\| call vimshell#altercmd#define('ll',  'ls -l')
-\| call vimshell#hook#set('chpwd',  ['g:my_chpwd'])
-\| call vimshell#hook#set('emptycmd',  ['g:my_emptycmd'])
-\| call vimshell#hook#set('preprompt',  ['g:my_preprompt'])
-\| call vimshell#hook#set('preexec',  ['g:my_preexec'])
-
-command! Vs :VimShell
+" ,is: シェルを起動
+nnoremap <silent> <Leader>is :VimShell<CR>
+" ,ipy: pythonを非同期で起動
+nnoremap <silent> <Leader>ipy :VimShellInteractive python3<CR>
+" ,ss: 非同期で開いたインタプリタに現在の行を評価させる
+vmap <silent> <Leader>ss: VimShellSendString
 
 "------------------------------------
 " neocomplecache.vim
@@ -639,7 +590,7 @@ inoremap <expr><C-l> neocomplcache#complete_common_string()
 " SuperTab like snippets behavior.
 imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
 " C-kを押すと行末まで削除
-inoremap <C-k> <C-o>D
+"inoremap <C-k> <C-o>D
 " C-nでneocomplcache補完
 inoremap <expr><C-n>  pumvisible() ? "\<C-n>" : "\<C-x>\<C-u>\<C-p>"
 " C-pでkeyword補完
@@ -650,7 +601,6 @@ inoremap <expr><CR>  pumvisible() ? neocomplcache#close_popup() : "<CR>"
 " <TAB>: completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " <C-h>,  <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
 inoremap <expr><C-x><C-o> &filetype == 'vim' ? "\<C-x><C-v><C-p>" : neocomplcache#manual_omni_complete()
 

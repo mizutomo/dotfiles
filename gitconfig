@@ -1,6 +1,6 @@
 [user]
-	name = Tomokatsu Mizukusa
-	email = mizukusa.tomokatsu@gmail.com
+  name = Tomokatsu Mizukusa
+  email = tomokatsu.mizukusa.sx@renesas.com
 [color]
   # colorの設定(以下のコマンドは自動で色つける)
   status = auto
@@ -65,9 +65,11 @@
   gr = grep
   gn = grep -n
   sm = submodule
-  # ASETサーバーでの対応
-  apush = push --receive-pack=/svtool/local/bin/git-receive-pack
-  aclone = clone --upload-pack=/svtool/local/bin/git-upload-pack
-  apull = pull --upload-pack=/svtool/local/bin/git-upload-pack
-  afetch = fetch --upload-pack=/svtool/local/bin/git-upload-pack
 
+[apply]
+  whitespace = nowarn
+[tig "bind"]
+  generic = g move-first-line
+  generic = G move-last-line
+[http]
+	sslverify = false
