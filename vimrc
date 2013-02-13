@@ -23,6 +23,7 @@ NeoBundle 'git://github.com/Shougo/vimshell.git'
 NeoBundle 'git://github.com/tpope/vim-surround.git'
 NeoBundle 'git://github.com/tpope/vim-repeat.git'
 NeoBundle 'git://github.com/vim-jp/vimdoc-ja.git'
+NeoBundle 'git://github.com/tpope/vim-fugitive.git'
 
 filetype plugin on
 filetype indent on
@@ -676,6 +677,17 @@ autocmd FileType twitvim call s:twitvim_my_settings()
 function! s:twitvim_my_settings()
   set nowrap
 endfunction
+
+" --------------------------------------------------
+"  Fugitive
+" --------------------------------------------------
+nnoremap <Leader>gd :<C-u>Gdiff<Enter>
+nnoremap <Leader>gs :<C-u>Gstatus<Enter>
+nnoremap <Leader>gl :<C-u>Glog<Enter>
+nnoremap <Leader>ga :<C-u>Gwrite<Enter>
+nnoremap <LEader>gc :<C-u>Gcommit<Enter>
+nnoremap <LEader>gC :<C-u>Git commit --amend<Enter>
+nnoremap <LEader>gb :<C-u>Gblame<Enter>
 
 "" ファイルを開いた際に、前回終了時の行で起動
 autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
