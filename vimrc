@@ -14,9 +14,9 @@ if has('vim_starting')
 endif
 
 " 自動でリポジトリと同期するプラグイン
-NeoBundle 'git://github.com/Shougo/neocomplecache.git'
+NeoBundle 'git://github.com/Shougo/neocomplcache.git'
 NeoBundle 'git://github.com/Shougo/neobundle.vim.git'
-NeoBundle 'git://github.com/Shougo/vimproc.vim.git'
+NeoBundle 'git://github.com/Shougo/vimproc.git'
 NeoBundle 'git://github.com/Shougo/unite.vim.git'
 NeoBundle 'git://github.com/Shougo/vimfiler.git'
 NeoBundle 'git://github.com/Shougo/vimshell.git'
