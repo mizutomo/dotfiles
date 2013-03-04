@@ -24,6 +24,8 @@ NeoBundle 'git://github.com/tpope/vim-surround.git'
 NeoBundle 'git://github.com/tpope/vim-repeat.git'
 NeoBundle 'git://github.com/vim-jp/vimdoc-ja.git'
 NeoBundle 'git://github.com/tpope/vim-fugitive.git'
+NeoBundle 'git://github.com/vim-scripts/spectre.vim'
+NeoBundle 'git://github.com/mizutomo/mast.git'
 
 filetype plugin on
 filetype indent on
