@@ -23,10 +23,11 @@ alias screen='screen -t main'
 alias vi=vim
 #alias make='make -j 4'
 alias makelog='make -j 1 |& tee make.log'
-alias sshsip1='ssh -l a0600760 172.22.18.6'
+alias sshsip1='ssh -l a0600760 sip1.mu.renesas.com'
 alias sshtama='ssh 10.30.95.31'
 alias sshkita='ssh klsl003'
 alias sshgpu='ssh mcll001'
+alias t='tmux'
 
 ## Alias for displaying only directory and symbolic link
 alias lsd='ls -ld *(-/DN)'
