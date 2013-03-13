@@ -14,18 +14,20 @@ if has('vim_starting')
 endif
 
 " 自動でリポジトリと同期するプラグイン
-NeoBundle 'git://github.com/Shougo/neocomplcache.git'
-NeoBundle 'git://github.com/Shougo/neobundle.vim.git'
-NeoBundle 'git://github.com/Shougo/vimproc.git'
-NeoBundle 'git://github.com/Shougo/unite.vim.git'
-NeoBundle 'git://github.com/Shougo/vimfiler.git'
-NeoBundle 'git://github.com/Shougo/vimshell.git'
-NeoBundle 'git://github.com/tpope/vim-surround.git'
-NeoBundle 'git://github.com/tpope/vim-repeat.git'
-NeoBundle 'git://github.com/vim-jp/vimdoc-ja.git'
-NeoBundle 'git://github.com/tpope/vim-fugitive.git'
-NeoBundle 'git://github.com/vim-scripts/spectre.vim'
-NeoBundle 'git://github.com/mizutomo/mast.git'
+NeoBundle 'Shougo/neocomplcache.git'
+NeoBundle 'Shougo/neobundle.vim.git'
+NeoBundle 'Shougo/vimproc.git'
+NeoBundle 'Shougo/unite.vim.git'
+NeoBundle 'Shougo/vimfiler.git'
+NeoBundle 'Shougo/vimshell.git'
+NeoBundle 'tpope/vim-surround.git'
+NeoBundle 'tpope/vim-repeat.git'
+NeoBundle 'vim-jp/vimdoc-ja.git'
+NeoBundle 'tpope/vim-fugitive.git'
+NeoBundle 'vim-scripts/spectre.vim'
+NeoBundle 'mizutomo/mast.git'
+NeoBundle 'DirDiff.vim'
+NeoBundle 'ujihisa/unite-colorscheme'
 
 filetype plugin on
 filetype indent on
