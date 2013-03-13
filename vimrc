@@ -695,3 +695,6 @@ nnoremap <LEader>gb :<C-u>Gblame<Enter>
 
 "" ファイルを開いた際に、前回終了時の行で起動
 autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
+
+"" 拡張子とファイルタイプの関連付け
+autocmd BufNewFIle,BufRead *.scs set filetype=spectre
