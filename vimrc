@@ -27,6 +27,7 @@ NeoBundle 'tpope/vim-fugitive.git'
 NeoBundle 'vim-scripts/spectre.vim'
 NeoBundle 'mizutomo/mast.git'
 NeoBundle 'DirDiff.vim'
+NeoBundle 'sakuraiyuta/commentout.vim'
 NeoBundle 'ujihisa/unite-colorscheme'
 
 filetype plugin on
