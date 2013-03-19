@@ -29,6 +29,7 @@ NeoBundle 'mizutomo/mast.git'
 NeoBundle 'DirDiff.vim'
 NeoBundle 'sakuraiyuta/commentout.vim'
 NeoBundle 'ujihisa/unite-colorscheme'
+NeoBundle 'kana/vim-fakeclip'
 
 filetype plugin on
 filetype indent on
@@ -56,8 +57,8 @@ set modeline            " モードラインを有効に
 "set modelines=0         " モードラインは無効
 set helplang=ja,en     " ヘルプの検索を 日本語->英語 に
 
-" OSのクリップボードを使用する
-" set clipboard+=unnamed   Yank/Pasteができなくなったので、コメントアウト
+set clipboard=unnamed,autoselect  " OSのクリップボードを使用する
+
 " ターミナルでマウスを使用できるようにする
 set mouse=a
 set guioptions+=a
