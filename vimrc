@@ -9,7 +9,11 @@ set nocompatible
 filetype off
 
 if has('vim_starting')
-  set runtimepath+=~/.vim/neobundle.vim
+  if has('win32')
+    set runtimepath+=~/vimfiles/neobundle.vim
+  else
+    set runtimepath+=~/.vim/neobundle.vim
+  endif
   call neobundle#rc(expand('~/.bundle'))
 endif
 
