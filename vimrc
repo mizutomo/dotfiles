@@ -19,6 +19,7 @@ endif
 
 " 自動でリポジトリと同期するプラグイン
 NeoBundle 'Shougo/neocomplcache.git'
+NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/neobundle.vim.git'
 NeoBundle 'Shougo/vimproc.git'
 NeoBundle 'Shougo/unite.vim.git'
@@ -585,8 +586,8 @@ let g:neocomplcache_dictionary_filetype_lists = {
 let g:neocomplcache_snippets_dir = $HOME.'/.vim/snippets'
 
 " スニペット
-imap <C-k> <Plug>(neocomplcache_snippets_expand)
-smap <C-k> <Plug>(neocomplcache_snippets_expand)
+imap <C-k> <Plug>(neosnippet_expand_or_jump)
+smap <C-k> <Plug>(neosnippet_expand_or_jump)
 
 " 補完を選択しpopupを閉じる
 inoremap <expr><C-y> neocomplcache#close_popup()
