@@ -35,6 +35,7 @@ NeoBundle 'DirDiff.vim'
 NeoBundle 'sakuraiyuta/commentout.vim'
 NeoBundle 'ujihisa/unite-colorscheme'
 NeoBundle 'kana/vim-fakeclip'
+NeoBundle 'vim-scripts/YankRing.vim'
 
 filetype plugin on
 filetype indent on
