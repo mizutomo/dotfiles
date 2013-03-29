@@ -706,3 +706,4 @@ autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "norm
 
 "" 拡張子とファイルタイプの関連付け
 autocmd BufNewFIle,BufRead *.scs set filetype=spectre
+autocmd BufNewFIle,BufRead *.sin set filetype=mast
