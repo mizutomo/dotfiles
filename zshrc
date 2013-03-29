@@ -29,6 +29,7 @@ alias sshkita='ssh klsl003'
 alias sshmu='ssh mlsl111'
 alias sshgpu='ssh mcll001'
 alias t='tmux'
+alias tig='tig --all'
 
 ## Alias for displaying only directory and symbolic link
 alias lsd='ls -ld *(-/DN)'
