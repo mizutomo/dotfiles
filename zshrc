@@ -122,6 +122,9 @@ bindkey -e
 autoload -U compinit
 compinit -u
 
+# Git Completion
+zstyle ':completion:*:*:git:*' script ~/dotfiles/zsh/completion/git-completion.zsh
+
 ## Coloring
 autoload -U colors
 colors
