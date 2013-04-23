@@ -43,7 +43,7 @@ alias -g G='|grep'
 alias -g GI='|grep -i'
 
 ## Seaching autoload zsh functions
-fpath=(~/dotfiles/zsh/completion $fpath)
+fpath=(/svhome/takiyo/local/hp/share/zsh/site-functions ~/dotfiles/zsh/completion $fpath)
 
 ## Remove dupulicate path
 typeset -U path cdpath fpath manpath
