@@ -9,21 +9,33 @@ set nocompatible
 filetype off
 
 if has('vim_starting')
-  set runtimepath+=~/.vim/neobundle.vim
-  call neobundle#rc(expand('~/.vim/bundle'))
+  if has('win32')
+    set runtimepath+=~/vimfiles/neobundle.vim
+  else
+    set runtimepath+=~/.vim/neobundle.vim
+  endif
+  call neobundle#rc(expand('~/.bundle'))
 endif
 
 " 自動でリポジトリと同期するプラグイン
-NeoBundle 'git://github.com/Shougo/neocomplcache.git'
-NeoBundle 'git://github.com/Shougo/neobundle.vim.git'
-NeoBundle 'git://github.com/Shougo/vimproc.git'
-NeoBundle 'git://github.com/Shougo/unite.vim.git'
-NeoBundle 'git://github.com/Shougo/vimfiler.git'
-NeoBundle 'git://github.com/Shougo/vimshell.git'
-NeoBundle 'git://github.com/tpope/vim-surround.git'
-NeoBundle 'git://github.com/tpope/vim-repeat.git'
-NeoBundle 'git://github.com/vim-jp/vimdoc-ja.git'
-NeoBundle 'git://github.com/tpope/vim-fugitive.git'
+NeoBundle 'Shougo/neocomplcache.git'
+NeoBundle 'Shougo/neosnippet'
+NeoBundle 'Shougo/neobundle.vim.git'
+NeoBundle 'Shougo/vimproc.git'
+NeoBundle 'Shougo/unite.vim.git'
+NeoBundle 'Shougo/vimfiler.git'
+NeoBundle 'Shougo/vimshell.git'
+NeoBundle 'tpope/vim-surround.git'
+NeoBundle 'tpope/vim-repeat.git'
+NeoBundle 'vim-jp/vimdoc-ja.git'
+NeoBundle 'tpope/vim-fugitive.git'
+NeoBundle 'vim-scripts/spectre.vim'
+NeoBundle 'mizutomo/mast.git'
+NeoBundle 'DirDiff.vim'
+NeoBundle 'sakuraiyuta/commentout.vim'
+NeoBundle 'ujihisa/unite-colorscheme'
+NeoBundle 'kana/vim-fakeclip'
+NeoBundle 'vim-scripts/YankRing.vim'
 
 filetype plugin on
 filetype indent on
@@ -51,8 +63,8 @@ set modeline            " モードラインを有効に
 "set modelines=0         " モードラインは無効
 set helplang=ja,en     " ヘルプの検索を 日本語->英語 に
 
-" OSのクリップボードを使用する
-" set clipboard+=unnamed   Yank/Pasteができなくなったので、コメントアウト
+set clipboard=unnamed,autoselect  " OSのクリップボードを使用する
+
 " ターミナルでマウスを使用できるようにする
 set mouse=a
 set guioptions+=a
@@ -575,8 +587,8 @@ let g:neocomplcache_dictionary_filetype_lists = {
 let g:neocomplcache_snippets_dir = $HOME.'/.vim/snippets'
 
 " スニペット
-imap <C-k> <Plug>(neocomplcache_snippets_expand)
-smap <C-k> <Plug>(neocomplcache_snippets_expand)
+imap <C-k> <Plug>(neosnippet_expand_or_jump)
+smap <C-k> <Plug>(neosnippet_expand_or_jump)
 
 " 補完を選択しpopupを閉じる
 inoremap <expr><C-y> neocomplcache#close_popup()
@@ -691,3 +703,7 @@ nnoremap <LEader>gb :<C-u>Gblame<Enter>
 
 "" ファイルを開いた際に、前回終了時の行で起動
 autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
+
+"" 拡張子とファイルタイプの関連付け
+autocmd BufNewFIle,BufRead *.scs set filetype=spectre
+autocmd BufNewFIle,BufRead *.sin set filetype=mast

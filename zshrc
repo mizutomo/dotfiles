@@ -23,10 +23,13 @@ alias screen='screen -t main'
 alias vi=vim
 #alias make='make -j 4'
 alias makelog='make -j 1 |& tee make.log'
-alias sshsip1='ssh -l a0600760 172.22.18.6'
+alias sshsip1='ssh -l a0600760 sip1.mu.renesas.com'
 alias sshtama='ssh 10.30.95.31'
 alias sshkita='ssh klsl003'
+alias sshmu='ssh mlsl111'
 alias sshgpu='ssh mcll001'
+alias t='tmux'
+alias tig='tig --all'
 
 ## Alias for displaying only directory and symbolic link
 alias lsd='ls -ld *(-/DN)'
@@ -42,7 +45,7 @@ alias -g G='|grep'
 alias -g GI='|grep -i'
 
 ## Seaching autoload zsh functions
-fpath=($fpath ~/.zfunc)
+fpath=(/svhome/takiyo/local/hp/share/zsh/site-functions ~/dotfiles/zsh/completion $fpath)
 
 ## Remove dupulicate path
 typeset -U path cdpath fpath manpath
@@ -151,3 +154,4 @@ if [ -f $HOME/.zshrc.local ]; then
   source $HOME/.zshrc.local
 fi
 
+unset SSH_ASKPASS
