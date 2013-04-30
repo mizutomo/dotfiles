@@ -10,13 +10,13 @@ filetype off
 
 if has('vim_starting')
   set runtimepath+=~/.vim/neobundle.vim
-  call neobundle#rc(expand('~/.bundle'))
+  call neobundle#rc(expand('~/.vim/bundle'))
 endif
 
 " 自動でリポジトリと同期するプラグイン
-NeoBundle 'git://github.com/Shougo/neocomplecache.git'
+NeoBundle 'git://github.com/Shougo/neocomplcache.git'
 NeoBundle 'git://github.com/Shougo/neobundle.vim.git'
-NeoBundle 'git://github.com/Shougo/vimproc.vim.git'
+NeoBundle 'git://github.com/Shougo/vimproc.git'
 NeoBundle 'git://github.com/Shougo/unite.vim.git'
 NeoBundle 'git://github.com/Shougo/vimfiler.git'
 NeoBundle 'git://github.com/Shougo/vimshell.git'
@@ -131,13 +131,13 @@ highlight ZenkakuSpace cterm=underline ctermfg=lightblue guibg=darkgray
 match ZenkakuSpace /　/
 
 " カーソル行をハイライト
-set cursorline
+"set cursorline
 " カレントウィンドウのみ罫線を引く
-augroup cch
-  autocmd! cch
-  autocmd WinLeave * set nocursorline
-  autocmd WinEnter,BufRead * set cursorline
-augroup END
+"augroup cch
+"  autocmd! cch
+"  autocmd WinLeave * set nocursorline
+"  autocmd WinEnter,BufRead * set cursorline
+"augroup END
 
 " コマンド実行中は再描画しない
 set lazyredraw
