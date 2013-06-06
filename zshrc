@@ -155,3 +155,6 @@ if [ -f $HOME/.zshrc.local ]; then
 fi
 
 unset SSH_ASKPASS
+
+# Ctrl-Sで画面がロックするのを防ぐ。
+stty stop undef
