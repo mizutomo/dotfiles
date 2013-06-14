@@ -36,6 +36,7 @@ NeoBundle 'sakuraiyuta/commentout.vim'
 NeoBundle 'ujihisa/unite-colorscheme'
 NeoBundle 'kana/vim-fakeclip'
 NeoBundle 'vim-scripts/YankRing.vim'
+NeoBundle 'http://sip1.mu.renesas.com/git/misc/verilog_systemverilog.git'
 
 filetype plugin on
 filetype indent on
@@ -707,3 +708,4 @@ autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "norm
 "" 拡張子とファイルタイプの関連付け
 autocmd BufNewFIle,BufRead *.scs set filetype=spectre
 autocmd BufNewFIle,BufRead *.sin set filetype=mast
+autocmd BufNewFIle,BufRead *.sv set filetype=verilog_systemverilog
