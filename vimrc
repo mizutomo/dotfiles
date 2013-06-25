@@ -259,34 +259,38 @@ else
     let g:neocomplcache_enable_smart_case = 1
     let g:neocomplcache_min_syntax_length = 3
     "NeoComplCacheEnable
-    let g:neocomplcache#enable_at_startup = 1
+    let g:neocomplcache_enable_at_startup = 1
 
-    " 補完を選択しpopupを閉じる
-    inoremap <expr><C-y> neocomplcache#close_popup()
-    " 補完をキャンセルしpopupを閉じる
-    inoremap <expr><C-e> neocomplcache#cancel_popup()
-    " TABで補完できるようにする
-    inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
-    " undo
-    inoremap <expr><C-g> neocomplcache#undo_completion()
-    " 補完候補の共通部分までを補完する
-    inoremap <expr><C-l> neocomplcache#complete_common_string()
-    " SuperTab like snippets behavior.
-    imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
-    " C-kを押すと行末まで削除
-    "inoremap <C-k> <C-o>D
-    " C-nでneocomplcache補完
-    inoremap <expr><C-n> pumvisible() ? "\<C-n>" : "\<C-x>\<C-u>\<C-p>"
-    " C-pでkeyword補完
-    inoremap <expr><C-p> pumvisible() ? "\<C-p>" : "\<C-p>\<C-n>"
-    " 補完候補が出ていたら確定、なければ改行
-    inoremap <expr><CR>  pumvisible() ? neocomplcache#close_popup() : "<CR>"
+    autocmd MyAutoCmd FileType neocomplcache call s:neocomplcache_settings()
+    function! s:neocomplcache_settings()
+      " 補完を選択しpopupを閉じる
+      inoremap <expr><C-y> neocomplcache#close_popup()
+      " 補完をキャンセルしpopupを閉じる
+      inoremap <expr><C-e> neocomplcache#cancel_popup()
+      " TABで補完できるようにする
+      inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+      " undo
+      inoremap <expr><C-g> neocomplcache#undo_completion()
+      " 補完候補の共通部分までを補完する
+      inoremap <expr><C-l> neocomplcache#complete_common_string()
+      " SuperTab like snippets behavior.
+      imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable()
+            \ ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+      " C-kを押すと行末まで削除
+      "inoremap <C-k> <C-o>D
+      " C-nでneocomplcache補完
+      inoremap <expr><C-n> pumvisible() ? "\<C-n>" : "\<C-x>\<C-u>\<C-p>"
+      " C-pでkeyword補完
+      inoremap <expr><C-p> pumvisible() ? "\<C-p>" : "\<C-p>\<C-n>"
+      " 補完候補が出ていたら確定、なければ改行
+      inoremap <expr><CR>  pumvisible() ? neocomplcache#close_popup() : "<CR>"
 
-    " <TAB>: completion.
-    inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
-    " <C-h>,  <BS>: close popup and delete backword char.
-    inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
-    inoremap <expr><C-x><C-o> &filetype == 'vim' ? "\<C-x><C-v><C-p>" : neocomplcache#manual_omni_complete()
+      " <TAB>: completion.
+      inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+      " <C-h>,  <BS>: close popup and delete backword char.
+      inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
+      inoremap <expr><C-x><C-o> &filetype == 'vim' ? "\<C-x><C-v><C-p>" : neocomplcache#manual_omni_complete()
+    endfunction
   endfunction
 endif
 " NeoComplete/NeoCompleCache }}}
