@@ -392,6 +392,18 @@ function! s:hooks.on_source(bundle)
   let g:jedi#rename_command = '<Leader>R'
   let g:jedi#goto_command = '<Leader>G'
 endfunction
+NeoBundleLazy "nvie/vim-flake8", {
+      \ "autoload": {
+      \   "filetypes": ["python", "python3", "djangohtml"],
+      \   "build": {
+      \     "mac" : "pip install flake8",
+      \     "unix": "pip install flake8",
+      \   }
+      \ }}
+let s:hooks = neobundle#get_hooks("vim-flake8")
+function! s:hooks.on_source(bundle)
+  let g:flake8_ignore = 'E111,E401'
+endfunction
 " Python }}}
 
 " Programming }}}
