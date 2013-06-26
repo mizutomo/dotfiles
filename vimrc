@@ -474,6 +474,7 @@ nnoremap <silent> <Leader>ipy :VimShellInteractive python3<CR>
 vmap <silent> <Leader>ss: VimShellSendString
 " }}}
 
+NeoBundle 'houtsnip/vim-emacscommandline'             " Vim-EmacsCommandLine
 NeoBundle 'sakuraiyuta/commentout.vim'
 NeoBundle 'kana/vim-fakeclip'
 NeoBundle 'http://sip1.mu.renesas.com/git/misc/verilog_systemverilog.git'
