@@ -196,6 +196,11 @@ function! s:hooks.on_source(bundle)
     nmap <buffer> <C-l> <C-w>l
   endfunction
 endfunction
+let g:vimfiler_as_default_explorer = 1  " Vimfilerをデフォルトのファイラにする。
+" ディレクトリで開いた場合にVimFilerを起動
+if isdirectory(expand("%:p"))
+  autocmd VimEnter * VimFiler
+endif
 " VimFiler }}}
 
 " Git {{{
