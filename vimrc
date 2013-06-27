@@ -345,6 +345,7 @@ nmap <Leader>T <plug>TaskList
 " Gundo/TaskList }}}
 
 " Programming {{{
+" vim-quickrun {{{
 NeoBundleLazy "thinca/vim-quickrun", {
   \ "autoload": {
   \   "mappings": [['nxo', '<Plug>(quickrun)']]
@@ -355,7 +356,16 @@ function! s:hooks.on_source(bundle)
   let g:quickrun_config = {
     \ "*": {"runmode": "async:remote:vimproc"}
     \ }
+  " Syntax Check
+  let g:quickrun_config['syntax/mast'] = {
+        \ 'runner': 'vimproc',
+        \ 'command': 'mast',
+        \ 'cmdopt': '-c',
+        \ 'exec': '%c %o %s:p',
+        \}
+  autocmd MyAutoCmd BufWritePost *.sin QuickRun -outputer quickfix -type syntax/mast
 endfunction
+" vim-quickrun }}}
 
 NeoBundleLazy 'majutsushi/tagbar', {
   \ "autload": {
