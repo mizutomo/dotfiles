@@ -124,7 +124,7 @@ NeoBundle "thinca/vim-template"
 autocmd MyAutoCmd User plugin-template-loaded call s:template_keywords()
 function! s:template_keywords()
   silent! %s/<+DATE+>/\=strftime('%Y-%m-%d')/g
-  silent! %s/<+FILENAME+>/\=expand('%:r')/g
+  silent! %s/<+FILENAME+>/\=expand('%')/g
 endfunction
 autocmd MyAutoCmd User plugin-template-loaded
   \ if search('<+CURSOR+>')
