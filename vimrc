@@ -38,7 +38,7 @@ let s:neobundle_root = s:bundle_root . "/neobundle.vim"
 
 if has('vim_starting')
   if s:is_windows
-    set runtimepath+=~/vimfiles/neobundle.vim
+    set runtimepath+=~/bundle/neobundle.vim
   else
     execute "set runtimepath+=" . s:neobundle_root
   endif
