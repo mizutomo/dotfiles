@@ -1,0 +1,35 @@
+#!/bin/sh
+
+ROOT=$(cd $(dirname $0); pwd)
+
+install_vim() {
+  echo "- Installing vim ..."
+  VIM_ROOT="$ROOT/vim"
+  rm -rf ~/.vim ~/.vimrc
+  ln -s "$ROOT/vim" ~/.vim
+  ln -s "$ROOT/vimrc" ~/.vimrc
+}
+
+install_zsh() {
+  echo "- Installing zsh ..."
+  rm -rf ~/.zshrc
+  ln -s "$ROOT/zshrc" ~/.zshrc
+}
+
+install_tmux() {
+  echo "- Installing tmux ..."
+  rm -rf ~/.tmux.conf
+  ln -s "$ROOT/tmux.conf" ~/.tmux.conf
+}
+
+install_git() {
+  echo "- Installing git ..."
+  rm -rf ~/.gitconfig
+  ln -s "$ROOT/gitconfig" ~/.gitconfig
+}
+
+install_vim
+install_zsh
+install_tmux
+install_git
+
