@@ -381,6 +381,10 @@ NeoBundle "scrooloose/syntastic", {
   \   "mac": ["pip install pyflake", "npm -g install coffeelint"],
   \   "unix": ["pip install pyflake", "npm -g install coffeelint"],
   \ }}
+let g:syntastic_mode_map = {
+      \ 'mode': 'active',
+      \ 'passive_filetypes': ['python']
+      \ }
 
 " Python {{{
 NeoBundleLazy "lambdalisue/vim-django-support", {
@@ -524,7 +528,7 @@ set helplang=ja,en     " ヘルプの検索を 日本語->英語 に
 
 " OSのクリップボードを使用する
 if has('unnamedplus')
-  set clipboard& clipboard+=unnamedplus
+  set clipboard& clipboard+=unnamedplus,unnamed
 else
   set clipboard& clipboard+=unnamed
 endif
