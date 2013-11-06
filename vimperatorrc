@@ -38,4 +38,8 @@ cnoremap jj <Esc>
 " Hatena BookMard
 javascript if (typeof hBookmark != 'undefined') liberator.loadScript('chrome://hatenabookmark/content/vimperator/plugin/hatenabookmark.js',  {__proto__: this});
 
+" 補完リストの選択をC-n, C-pで行う
+cnoremap <C-n> <TAB>
+cnoremap <C-p> <S-TAB>
+
 " vim: set ft=vimperator:
