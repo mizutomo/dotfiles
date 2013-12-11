@@ -53,7 +53,7 @@ endif
 NeoBundleFetch 'Shougo/neobundle.vim'
 
 " vimprocにより、非同期プロセスを可能に
-NeoBundle "Shougo/vimproc", {
+NeoBundle "Shougo/vimproc.vim", {
   \ "build": {
   \   "windows" : "make -f make_mingw32.mak",
   \   "cygwin"  : "make -f make_cygwin.mak",
@@ -125,7 +125,7 @@ NeoBundle "thinca/vim-template"
 autocmd MyAutoCmd User plugin-template-loaded call s:template_keywords()
 function! s:template_keywords()
   silent! %s/<+DATE+>/\=strftime('%Y-%m-%d')/g
-  silent! %s/<+FILENAME+>/\=expand('%:r')/g
+  silent! %s/<+FILENAME+>/\=expand('%')/g
 endfunction
 autocmd MyAutoCmd User plugin-template-loaded
   \ if search('<+CURSOR+>')
@@ -346,6 +346,7 @@ nmap <Leader>T <plug>TaskList
 " Gundo/TaskList }}}
 
 " Programming {{{
+" vim-quickrun {{{
 NeoBundleLazy "thinca/vim-quickrun", {
   \ "autoload": {
   \   "mappings": [['nxo', '<Plug>(quickrun)']]
@@ -360,7 +361,16 @@ function! s:hooks.on_source(bundle)
   let g:quickrun_config['markdown'] = {
     \ 'outputter': 'browser',
     \ }
+  " Syntax Check
+  let g:quickrun_config['syntax/mast'] = {
+        \ 'runner': 'vimproc',
+        \ 'command': 'mast',
+        \ 'cmdopt': '-c',
+        \ 'exec': '%c %o %s:p',
+        \}
+  autocmd MyAutoCmd BufWritePost *.sin QuickRun -outputer quickfix -type syntax/mast
 endfunction
+" vim-quickrun }}}
 
 NeoBundleLazy 'majutsushi/tagbar', {
   \ "autload": {
@@ -376,6 +386,10 @@ NeoBundle "scrooloose/syntastic", {
   \   "mac": ["pip install pyflake", "npm -g install coffeelint"],
   \   "unix": ["pip install pyflake", "npm -g install coffeelint"],
   \ }}
+let g:syntastic_mode_map = {
+      \ 'mode': 'active',
+      \ 'passive_filetypes': ['python']
+      \ }
 
 " Python {{{
 NeoBundleLazy "lambdalisue/vim-django-support", {
@@ -500,7 +514,7 @@ set helplang=ja,en     " ヘルプの検索を 日本語->英語 に
 
 " OSのクリップボードを使用する
 if has('unnamedplus')
-  set clipboard& clipboard+=unnamedplus
+  set clipboard& clipboard+=unnamedplus,unnamed
 else
   set clipboard& clipboard+=unnamed
 endif
