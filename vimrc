@@ -38,7 +38,7 @@ let s:neobundle_root = s:bundle_root . "/neobundle.vim"
 
 if has('vim_starting')
   if s:is_windows
-    set runtimepath+=~/vimfiles/neobundle.vim
+    set runtimepath+=~/bundle/neobundle.vim
   else
     execute "set runtimepath+=" . s:neobundle_root
   endif
@@ -53,7 +53,7 @@ endif
 NeoBundleFetch 'Shougo/neobundle.vim'
 
 " vimprocにより、非同期プロセスを可能に
-NeoBundle "Shougo/vimproc", {
+NeoBundle "Shougo/vimproc.vim", {
   \ "build": {
   \   "windows" : "make -f make_mingw32.mak",
   \   "cygwin"  : "make -f make_cygwin.mak",
@@ -112,6 +112,7 @@ endfunction
 " Syntax / Indent / Omni {{{
 " syntax /indent /filetypes for git
 NeoBundleLazy 'tpope/vim-git', {'autoload': { 'filetypes': 'git' }}
+NeoBundleLazy 'tpope/vim-markdown', {'autoload': { 'filetypes': 'markdown' }}
 NeoBundleLazy 'groenewege/vim-less.git', {'autoload': { 'filetypes': 'less' }}
 NeoBundleLazy 'mizutomo/mast.git', {'autoload': { 'filetypes': 'mast' }}
 NeoBundleLazy 'vim-scripts/spectre.vim', {'autoload': { 'filetypes': 'spectre' }}
@@ -124,7 +125,7 @@ NeoBundle "thinca/vim-template"
 autocmd MyAutoCmd User plugin-template-loaded call s:template_keywords()
 function! s:template_keywords()
   silent! %s/<+DATE+>/\=strftime('%Y-%m-%d')/g
-  silent! %s/<+FILENAME+>/\=expand('%:r')/g
+  silent! %s/<+FILENAME+>/\=expand('%')/g
 endfunction
 autocmd MyAutoCmd User plugin-template-loaded
   \ if search('<+CURSOR+>')
@@ -326,7 +327,7 @@ function! s:hooks.on_source(bundle)
   " Enable snipMate compatibility feature
   let g:neosnippet#enable_snipmate_compatibility = 1
   " Tell Neosnippet about the other snippets
-  let g:neosnippet#snippets_directory=s:bundle_root . '/vim-snippets/snippets'
+  let g:neosnippet#snippets_directory=s:bundle_root . '/vim-snippets/snippets' . ',' . '~/dotfiles/vim/snippets'
 endfunction
 " NeoSnippet }}}
 
@@ -345,6 +346,7 @@ nmap <Leader>T <plug>TaskList
 " Gundo/TaskList }}}
 
 " Programming {{{
+" vim-quickrun {{{
 NeoBundleLazy "thinca/vim-quickrun", {
   \ "autoload": {
   \   "mappings": [['nxo', '<Plug>(quickrun)']]
@@ -353,9 +355,22 @@ nmap <Leader>r <Plug>(quickrun)
 let s:hooks = neobundle#get_hooks("vim-quickrun")
 function! s:hooks.on_source(bundle)
   let g:quickrun_config = {
-    \ "*": {"runmode": "async:remote:vimproc"}
+    \ "*": {"runmode": "async:remote:vimproc"},
+    \ "_": {"runner": "vimproc", "runner/vimproc/updatetime": 60},
     \ }
+  let g:quickrun_config['markdown'] = {
+    \ 'outputter': 'browser',
+    \ }
+  " Syntax Check
+  let g:quickrun_config['syntax/mast'] = {
+        \ 'runner': 'vimproc',
+        \ 'command': 'mast',
+        \ 'cmdopt': '-c',
+        \ 'exec': '%c %o %s:p',
+        \}
+  autocmd MyAutoCmd BufWritePost *.sin QuickRun -outputer quickfix -type syntax/mast
 endfunction
+" vim-quickrun }}}
 
 NeoBundleLazy 'majutsushi/tagbar', {
   \ "autload": {
@@ -371,6 +386,10 @@ NeoBundle "scrooloose/syntastic", {
   \   "mac": ["pip install pyflake", "npm -g install coffeelint"],
   \   "unix": ["pip install pyflake", "npm -g install coffeelint"],
   \ }}
+let g:syntastic_mode_map = {
+      \ 'mode': 'active',
+      \ 'passive_filetypes': ['python']
+      \ }
 
 " Python {{{
 NeoBundleLazy "lambdalisue/vim-django-support", {
@@ -414,31 +433,12 @@ endfunction
 " Programming }}}
 
 " Pandoc {{{
+NeoBundle 'tyru/open-browser.vim'
+NeoBundleLazy 'tpope/vim-markdown', {'autoload': { 'filetypes': 'markdown' }}
 NeoBundleLazy "vim-pandoc/vim-pandoc", {
   \ "autoload": {
   \   "filetypes": ["text", "pandoc", "markdown", "rst", "textile"],
   \ }}
-NeoBundleLazy "lambdalisue/shareboard.vim", {
-  \ "autoload": {
-  \   "commands": ["ShareboardPreview", "ShareboardCompile"],
-  \ },
-  \ "build": {
-  \   "mac": "pip install shareboard",
-  \   "unix": "pip install shareboard",
-  \ }}
-function! s:shareboard_settings()
-  nnoremap <buffer>[shareboard] <Nop>
-  nmap <buffer><Leader> [shareboard]
-  nnoremap <buffer><silent> [shareboard]v :ShareboardPreview<CR>
-  nnoremap <buffer><silent> [shareboard]c :ShareboardCompile<CR>
-endfunction
-autocmd MyAutoCmd FileType rst,text,pandoc,markdown,textile call s:shareboard_settings()
-let s:hooks = neobundle#get_hooks("shareboard.vim")
-function! s:hooks.on_source(bundle)
-  let g:shareboard_command = expand('~/.vim/shareboard/command.sh markdown+autolink_bare_uris+abbreviations')
-  " add ~/.cabal/bin to PATH
-  let $PATH=expand("~/.cabal/bin:") . $PATH
-endfunction
 " Pandoc }}}
 
 " Ramdisk {{{
@@ -514,7 +514,7 @@ set helplang=ja,en     " ヘルプの検索を 日本語->英語 に
 
 " OSのクリップボードを使用する
 if has('unnamedplus')
-  set clipboard& clipboard+=unnamedplus
+  set clipboard& clipboard+=unnamedplus,unnamed
 else
   set clipboard& clipboard+=unnamed
 endif
@@ -935,6 +935,7 @@ set noimdisable
 set iminsert=0 imsearch=0
 set noimcmdline
 inoremap <silent> <ESC> <ESC>:set iminsert=0<CR>
+inoremap <silent> <C-[> <ESC>:set iminsert=0<CR>
 "
 " yeでそのカーソル位置にある単語をレジスタに追加
 nmap ye :let @"=expand("<cword>")<CR>
@@ -1020,7 +1021,9 @@ autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "norm
 autocmd BufNewFIle,BufRead *.scs set filetype=spectre
 autocmd BufNewFIle,BufRead *.sin set filetype=mast
 autocmd BufNewFIle,BufRead *.sv set filetype=verilog_systemverilog
+autocmd BufNewFile,BufRead *.md set filetype=markdown
 
 "" 対応するbegin~endの機能強化
 source $VIMRUNTIME/macros/matchit.vim
 NeoBundle 'vimtaku/hl_matchit.vim.git'
+

@@ -12,7 +12,7 @@ alias mkdir='nocorrect mkdir'
 alias git='nocorrect git'
 alias make='nocorrect make'
 alias grep=egrep
-alias ls='ls -F --color=yes'
+alias ls='ls -F --color=yes -v'
 alias ll='ls -l'
 alias la='ls -a'
 alias clean='rm *~'

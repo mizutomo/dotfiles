@@ -1,0 +1,27 @@
+# エンコーディング
+defencoding utf-8
+
+# Prefixキーの設定
+escape ^Tt
+
+# スタートアップメッセージの削除
+startup_message off
+
+# オートデタッチ
+autodetach on
+
+# Emacs key bind
+bind 2 split
+bind 3 split -v
+bind 1 only
+bind 0 remove
+bind o focus
+
+# copy/scrollback mode (C-t esc)で戻れるhistory bufferを増やす。
+defscrollback 3000
+
+# ビジュアルベルをoffにする。
+vbell off
+
+# 画面下に時刻&スクリーン一覧を表示する。
+hardstatus alwayslastline "%{= rw} %H %{= wk}%-LW%{= bw}%n%f* %t%{= wk}%+Lw %{= wk}%=%{= gk} %y/%m/%d %c "
