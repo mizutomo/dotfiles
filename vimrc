@@ -112,6 +112,7 @@ endfunction
 " Syntax / Indent / Omni {{{
 " syntax /indent /filetypes for git
 NeoBundleLazy 'tpope/vim-git', {'autoload': { 'filetypes': 'git' }}
+NeoBundleLazy 'tpope/vim-markdown', {'autoload': { 'filetypes': 'markdown' }}
 NeoBundleLazy 'groenewege/vim-less.git', {'autoload': { 'filetypes': 'less' }}
 NeoBundleLazy 'mizutomo/mast.git', {'autoload': { 'filetypes': 'mast' }}
 NeoBundleLazy 'vim-scripts/spectre.vim', {'autoload': { 'filetypes': 'spectre' }}
@@ -356,7 +357,11 @@ nmap <Leader>r <Plug>(quickrun)
 let s:hooks = neobundle#get_hooks("vim-quickrun")
 function! s:hooks.on_source(bundle)
   let g:quickrun_config = {
-    \ "*": {"runmode": "async:remote:vimproc"}
+    \ "*": {"runmode": "async:remote:vimproc"},
+    \ "_": {"runner": "vimproc", "runner/vimproc/updatetime": 60},
+    \ }
+  let g:quickrun_config['markdown'] = {
+    \ 'outputter': 'browser',
     \ }
   " Syntax Check
   let g:quickrun_config['syntax/mast'] = {
@@ -430,31 +435,12 @@ endfunction
 " Programming }}}
 
 " Pandoc {{{
+NeoBundle 'tyru/open-browser.vim'
+NeoBundleLazy 'tpope/vim-markdown', {'autoload': { 'filetypes': 'markdown' }}
 NeoBundleLazy "vim-pandoc/vim-pandoc", {
   \ "autoload": {
   \   "filetypes": ["text", "pandoc", "markdown", "rst", "textile"],
   \ }}
-NeoBundleLazy "lambdalisue/shareboard.vim", {
-  \ "autoload": {
-  \   "commands": ["ShareboardPreview", "ShareboardCompile"],
-  \ },
-  \ "build": {
-  \   "mac": "pip install shareboard",
-  \   "unix": "pip install shareboard",
-  \ }}
-function! s:shareboard_settings()
-  nnoremap <buffer>[shareboard] <Nop>
-  nmap <buffer><Leader> [shareboard]
-  nnoremap <buffer><silent> [shareboard]v :ShareboardPreview<CR>
-  nnoremap <buffer><silent> [shareboard]c :ShareboardCompile<CR>
-endfunction
-autocmd MyAutoCmd FileType rst,text,pandoc,markdown,textile call s:shareboard_settings()
-let s:hooks = neobundle#get_hooks("shareboard.vim")
-function! s:hooks.on_source(bundle)
-  let g:shareboard_command = expand('~/.vim/shareboard/command.sh markdown+autolink_bare_uris+abbreviations')
-  " add ~/.cabal/bin to PATH
-  let $PATH=expand("~/.cabal/bin:") . $PATH
-endfunction
 " Pandoc }}}
 
 " Ramdisk {{{
@@ -944,6 +930,7 @@ set noimdisable
 set iminsert=0 imsearch=0
 set noimcmdline
 inoremap <silent> <ESC> <ESC>:set iminsert=0<CR>
+inoremap <silent> <C-[> <ESC>:set iminsert=0<CR>
 "
 " yeでそのカーソル位置にある単語をレジスタに追加
 nmap ye :let @"=expand("<cword>")<CR>
@@ -1026,6 +1013,7 @@ let g:changelog_username="Tomokatsu Mizukusa <mizukusa.tomokatsu@gmail.com>"
 autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
 
 "" 拡張子とファイルタイプの関連付け
-autocmd BufNewFIle,BufRead *.scs set filetype=spectre
-autocmd BufNewFIle,BufRead *.sin set filetype=mast
-autocmd BufNewFIle,BufRead *.sv set filetype=verilog_systemverilog
+autocmd BufNewFile,BufRead *.scs set filetype=spectre
+autocmd BufNewFile,BufRead *.sin set filetype=mast
+autocmd BufNewFile,BufRead *.sv set filetype=verilog_systemverilog
+autocmd BufNewFile,BufRead *.md set filetype=markdown
