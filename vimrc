@@ -1020,3 +1020,7 @@ autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "norm
 autocmd BufNewFIle,BufRead *.scs set filetype=spectre
 autocmd BufNewFIle,BufRead *.sin set filetype=mast
 autocmd BufNewFIle,BufRead *.sv set filetype=verilog_systemverilog
+
+"" 対応するbegin~endの機能強化
+source $VIMRUNTIME/macros/matchit.vim
+NeoBundle 'vimtaku/hl_matchit.vim.git'
