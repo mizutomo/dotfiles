@@ -1,0 +1,124 @@
+snippet     mod
+abbr        module() endmodule
+  module ${1:`expand("%:r")`}(${2:portlist});
+  ${3:/* code */}
+  endmodule
+
+snippet     inc
+abbr        `include "..."
+  \`include "${1}"${2}
+
+snippet     def
+abbr        `define def_name def_val
+  \`define ${1:name} ${2:val}${3}
+
+snippet     ts
+abbr        `timescale ..s/..s
+  \`timescale ${1:1ps}/${2:1ps}${3}
+
+snippet     inp
+abbr        inp
+  input ${1:input_name};${2}
+
+snippet     inpa
+abbr        input [];
+  input [${1}:${2:0}] ${3:input_name};${4}
+
+snippet     out
+abbr        output
+  output ${1:input_name};${2}
+
+snippet     outa
+abbr        output [];
+  output [${1}:${2:0}] ${3:output_name};${4}
+
+snippet     reg
+abbr        reg
+  reg ${1:reg_name};${2}
+
+snippet     rega
+abbr        reg [];
+  reg [${1}:${2:0}] ${3:reg_name};${4}
+
+snippet     regm
+abbr        reg [] [];
+  reg [${1}:${2:0}] ${3:reg_name} [${4:0}:${5}];${6}
+
+snippet     wire
+abbr        wire
+  wire ${1:wire_name};${2}
+
+snippet     wirea
+abbr        wire [];
+  wire [${1}:${2:0}] ${3:wire_name};${4}
+
+snippet     always
+abbr        always @() begin end
+  always @(${1:sensitivity_list}) begin
+  ${2:/* code */}
+  end
+
+snippet     alwaysclk
+abbr        alway @(posedge clk) begin end
+  always @(posedge clk) begin
+  ${1:/* code */}
+  end
+
+snippet     if
+abbr        if() begin end
+  if(${1:condition}) begin
+  ${2:/* code */}
+  end
+
+snippet     ifelifelse
+abbr        if() else if() else
+  if(${1:condition}) begin
+  ${2:/* code */}
+  end else if(${3:condition}) begin
+  ${4:/* code */}
+  end else begin
+  ${5:/* code */}
+  end
+
+snippet     ifelse
+abbr        if() ... else ...
+  if(${1:condition}) begin
+  ${2:/* code */}
+  end else begin
+  ${3:/* code */}
+  end
+
+snippet     ini
+abbr        initial begin end
+  initial begin
+  ${1:/* code */}
+  end
+
+snippet     as
+abbr        assign
+  assign ${1} = ${2};${4}
+
+snippet     param
+abbr        parameter name = val;
+  parameter ${1:name} = ${2:val};${3}
+
+snippet     for
+abbr        for(...; ...; ...) begin end
+  for (${1:i} = ${2:0}; ${3:$1 < 10}; $1${4: = $1 + 1}) begin
+  ${5:/* code */}
+  end
+
+snippet     wh
+abbr        while(...) begin end
+  while(${1:condition}) begin
+  ${2:/* code */}
+  end
+
+snippet     func
+abbr        function  endfunction;
+  function ${1:function_name};
+  ${2:portlist};
+  begin
+  ${3:/* code */};
+  end
+  endfunction
