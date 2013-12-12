@@ -168,6 +168,8 @@ function! s:hooks.on_source(bundle)
     nmap <buffer> <C-p> <Plug>(unite_select_previous_line)
   endfunction
 endfunction
+
+NeoBundle 'moznion/unite-git-conflict.vim'
 " }}} Unite
 
 " VimFiler {{{
