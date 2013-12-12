@@ -741,6 +741,13 @@ nnoremap <C-i><C-i> :<C-u>help<Space><C-r><C-w><Enter>
 command! -nargs=1 Gb :GrepBuffer <args>
 "カーソル下の単語をGrepBufferする
 nnoremap <C-g><C-b> :<C-u>GrepBuffer<Space><C-r><C-w><Enter>
+
+" vimgrepした結果を簡単に移動する
+nnoremap [q :cprevious<CR>    " 前へ
+nnoremap ]q :cnext<CR>        " 次へ
+nnoremap [Q :<C-u>cfirst<CR>  " 最初へ
+nnoremap ]Q :<C-u>clast<CR>   " 最後へ
+nnoremap <silent> <ESC><ESC><ESC> :vimgrep lsdmclsdmewjweojsdofsdcsdm %<CR>    " 無意味な文字列を検索してハイライトを消す
 "  検索設定 Search }}}
 
 " --------------------------------------------------
