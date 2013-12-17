@@ -31,6 +31,7 @@ alias sshgpu='ssh mcll001'
 alias t='tmux'
 alias tig='tig --all'
 alias verdi='verdi -nologo'
+alias vimdef='vim -u NONE -N'
 
 ## Alias for displaying only directory and symbolic link
 alias lsd='ls -ld *(-/DN)'
