@@ -169,6 +169,10 @@ function! s:hooks.on_source(bundle)
   endfunction
 endfunction
 
+" history/yankの有効化
+let g:unite_source_history_yank_enable = 1
+nnoremap <silent> ugy :<C-u>Unite history/yank<CR>
+
 NeoBundle 'moznion/unite-git-conflict.vim'
 " }}} Unite
 
@@ -239,8 +243,17 @@ NeoBundleLazy "gregsexton/gitv", {
 " Editing support {{{
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'vim-scripts/Align'
-NeoBundle 'vim-scripts/YankRing.vim'
+"NeoBundle 'vim-scripts/YankRing.vim'  " 必要なキーマップを上書きしてしまうため削除
+NeoBundle 'LeafCage/yankround.vim'     " YankRing.vimの代わりに追加
 " }}}
+
+" yankround.vimの設定(なるべくYankRing.vimぽく)
+nmap p  <Plug>(yankround-p)
+nmap P  <Plug>(yankround-P)
+nmap gp <Plug>(yankround-gp)
+nmap gP <Plug>(yankround-gP)
+nmap <C-p> <Plug>(yankround-prev)
+nmap <C-n> <Plug>(yankround-next)
 
 " NeoComplete/NeoCompleCache {{{
 if has('lua') && v:version > 703 && has('patch885')
