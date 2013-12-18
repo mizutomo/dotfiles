@@ -763,6 +763,10 @@ nnoremap ]q :cnext<CR>        " 次へ
 nnoremap [Q :<C-u>cfirst<CR>  " 最初へ
 nnoremap ]Q :<C-u>clast<CR>   " 最後へ
 nnoremap <silent> <ESC><ESC><ESC> :vimgrep lsdmclsdmewjweojsdofsdcsdm %<CR>    " 無意味な文字列を検索してハイライトを消す
+
+" F5キーでコマンド履歴、F6キーで検索履歴を開く
+nnoremap <F5> <CR>q:
+nnoremap <F6> <CR>q/
 "  検索設定 Search }}}
 
 " --------------------------------------------------
