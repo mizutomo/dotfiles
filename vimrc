@@ -507,6 +507,9 @@ nnoremap <Leader>ml :MemoList<CR>
 nnoremap <Leader>mg :MemoGrep<CR>
 let g:memolist_path = "$HOME/Memo"
 let g:memolist_qfixgrep = 1
+let g:memolist_unite = 1
+let g:memolist_unite_source = "file_rec"
+let g:memolist_unite_option = "-start-insert"
 " Memolist }}}
 " Plugin }}}
 
