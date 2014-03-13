@@ -498,6 +498,19 @@ NeoBundle 'houtsnip/vim-emacscommandline'             " Vim-EmacsCommandLine
 NeoBundle 'sakuraiyuta/commentout.vim'
 NeoBundle 'kana/vim-fakeclip'
 NeoBundle 'http://sip1.mu.renesas.com/git/misc/verilog_systemverilog.git'
+
+" Memolist {{{
+NeoBundle 'fuenor/qfixgrep.git'
+NeoBundle 'glidenote/memolist.vim'
+nnoremap <Leader>mn :MemoNew<CR>
+nnoremap <Leader>ml :MemoList<CR>
+nnoremap <Leader>mg :MemoGrep<CR>
+let g:memolist_path = "$HOME/Memo"
+let g:memolist_qfixgrep = 1
+let g:memolist_unite = 1
+let g:memolist_unite_source = "file_rec"
+let g:memolist_unite_option = "-start-insert"
+" Memolist }}}
 " Plugin }}}
 
 " Install missing plugins
