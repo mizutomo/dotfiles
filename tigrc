@@ -1,0 +1,13 @@
+# main viewの左端にコミットIDを表示する
+set show-id = yes
+
+# キーバインドの設定
+## デフォルトの bind generic G !git gc を無効化する
+bind generic G none
+
+## カーソルあるコミット上にブランチを作成
+bind main n !git checkout -b %(prompt) %(commit)
+
+## 任意のリビジョンを再現するために、checkoutする
+bind main C !?git checkout %(commit)
+
