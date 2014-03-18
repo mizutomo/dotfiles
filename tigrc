@@ -11,3 +11,6 @@ bind main n !git checkout -b %(prompt) %(commit)
 ## 任意のリビジョンを再現するために、checkoutする
 bind main C !?git checkout %(commit)
 
+## diffの時に、空白の違いを無視
+set ignore-space = yes
+
