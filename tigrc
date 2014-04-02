@@ -12,7 +12,7 @@ set show-line-numbers = yes
 set line-number-interval = 10
 
 ## 表示を●に変更
-set line-graphics = utf-8
+set line-graphics = ascii
 
 ## diffの時に、空白の違いを無視
 set ignore-space = yes
@@ -30,6 +30,6 @@ bind main n !git checkout -b %(prompt) %(commit)
 bind main C !?git checkout %(commit)
 
 ## 任意のリビジョンをアーカイブする
-bind main a !?git archive -o %(commit).tar.gz %(commit)
+bind main a !?git archive -o %(prompt).tar.gz %(commit)
 
 # キーバインドの設定 }}}
