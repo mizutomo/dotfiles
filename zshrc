@@ -12,7 +12,11 @@ alias mkdir='nocorrect mkdir'
 alias git='nocorrect git'
 alias make='nocorrect make'
 alias grep=egrep
-alias ls='ls -F --color=yes'
+if [ `uname` = "Darwin" ]; then
+  alias ls='gls -F --color=yes'
+else
+  alias ls='ls -F --color=yes'
+fi
 alias ll='ls -l'
 alias la='ls -a'
 alias clean='rm *~'
