@@ -9,7 +9,7 @@ set nocompatible       " vi非互換
 let mapleader=","       " キーマップリーダー
 let s:is_windows = has('win16') || has('win32') || has('win64')
 let s:is_cygwin = has('win32unix')
-let s:is_darwin = has('mac') || has('macunix') || has('gui_macvim')
+let s:is_darwin = substitute(system('uname -s'), '\n', '', '') == 'Darwin'
 let s:is_unix = !s:is_windows && !s:is_cygwin && !s:is_darwin
 
 if s:is_windows
@@ -115,10 +115,12 @@ NeoBundleLazy 'tpope/vim-git', {'autoload': { 'filetypes': 'git' }}
 NeoBundleLazy 'groenewege/vim-less.git', {'autoload': { 'filetypes': 'less' }}
 NeoBundleLazy 'mizutomo/mast.git', {'autoload': { 'filetypes': 'mast' }}
 NeoBundleLazy 'vim-scripts/spectre.vim', {'autoload': { 'filetypes': 'spectre' }}
-NeoBundleLazy 'http://sip1.mu.renesas.com/git/misc/verilog_systemverilog.git', {
-      \ 'autoload': { 'filetypes': 'verilog_systemverilog'}}
+if !s:is_darwin
+  NeoBundleLazy 'http://sip1.mu.renesas.com/git/misc/verilog_systemverilog.git', {
+        \ 'autoload': { 'filetypes': 'verilog_systemverilog'}}
+endif
 " }}}
-"
+
 " File Management {{{
 NeoBundle "thinca/vim-template"
 autocmd MyAutoCmd User plugin-template-loaded call s:template_keywords()
@@ -482,7 +484,9 @@ vmap <silent> <Leader>ss: VimShellSendString
 NeoBundle 'houtsnip/vim-emacscommandline'             " Vim-EmacsCommandLine
 NeoBundle 'sakuraiyuta/commentout.vim'
 NeoBundle 'kana/vim-fakeclip'
-NeoBundle 'http://sip1.mu.renesas.com/git/misc/verilog_systemverilog.git'
+if !s:is_darwin
+  NeoBundle 'http://sip1.mu.renesas.com/git/misc/verilog_systemverilog.git'
+endif
 " Plugin }}}
 
 " Install missing plugins
