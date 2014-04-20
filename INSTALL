@@ -28,8 +28,14 @@ install_git() {
   ln -s "$ROOT/gitconfig" ~/.gitconfig
 }
 
+install_tig() {
+  echo "- Installing git ..."
+  rm -rf ~/.tigrc
+  ln -s "$ROOT/tigrc" ~/.tigrc
+}
+
 install_vim
 install_zsh
 install_tmux
 install_git
-
+install_tig

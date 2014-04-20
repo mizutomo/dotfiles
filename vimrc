@@ -53,7 +53,7 @@ endif
 NeoBundleFetch 'Shougo/neobundle.vim'
 
 " vimprocにより、非同期プロセスを可能に
-NeoBundle "Shougo/vimproc", {
+NeoBundle "Shougo/vimproc.vim", {
   \ "build": {
   \   "windows" : "make -f make_mingw32.mak",
   \   "cygwin"  : "make -f make_cygwin.mak",
@@ -112,6 +112,7 @@ endfunction
 " Syntax / Indent / Omni {{{
 " syntax /indent /filetypes for git
 NeoBundleLazy 'tpope/vim-git', {'autoload': { 'filetypes': 'git' }}
+NeoBundleLazy 'tpope/vim-markdown', {'autoload': { 'filetypes': 'markdown' }}
 NeoBundleLazy 'groenewege/vim-less.git', {'autoload': { 'filetypes': 'less' }}
 NeoBundleLazy 'mizutomo/mast.git', {'autoload': { 'filetypes': 'mast' }}
 NeoBundleLazy 'vim-scripts/spectre.vim', {'autoload': { 'filetypes': 'spectre' }}
@@ -126,7 +127,7 @@ NeoBundle "thinca/vim-template"
 autocmd MyAutoCmd User plugin-template-loaded call s:template_keywords()
 function! s:template_keywords()
   silent! %s/<+DATE+>/\=strftime('%Y-%m-%d')/g
-  silent! %s/<+FILENAME+>/\=expand('%:r')/g
+  silent! %s/<+FILENAME+>/\=expand('%')/g
 endfunction
 autocmd MyAutoCmd User plugin-template-loaded
   \ if search('<+CURSOR+>')
@@ -169,6 +170,12 @@ function! s:hooks.on_source(bundle)
     nmap <buffer> <C-p> <Plug>(unite_select_previous_line)
   endfunction
 endfunction
+
+" history/yankの有効化
+let g:unite_source_history_yank_enable = 1
+nnoremap <silent> ugy :<C-u>Unite history/yank<CR>
+
+NeoBundle 'moznion/unite-git-conflict.vim'
 " }}} Unite
 
 " VimFiler {{{
@@ -238,8 +245,17 @@ NeoBundleLazy "gregsexton/gitv", {
 " Editing support {{{
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'vim-scripts/Align'
-NeoBundle 'vim-scripts/YankRing.vim'
+"NeoBundle 'vim-scripts/YankRing.vim'  " 必要なキーマップを上書きしてしまうため削除
+NeoBundle 'LeafCage/yankround.vim'     " YankRing.vimの代わりに追加
 " }}}
+
+" yankround.vimの設定(なるべくYankRing.vimぽく)
+nmap p  <Plug>(yankround-p)
+nmap P  <Plug>(yankround-P)
+nmap gp <Plug>(yankround-gp)
+nmap gP <Plug>(yankround-gP)
+nmap <C-p> <Plug>(yankround-prev)
+nmap <C-n> <Plug>(yankround-next)
 
 " NeoComplete/NeoCompleCache {{{
 if has('lua') && v:version > 703 && has('patch885')
@@ -347,6 +363,7 @@ nmap <Leader>T <plug>TaskList
 " Gundo/TaskList }}}
 
 " Programming {{{
+" vim-quickrun {{{
 NeoBundleLazy "thinca/vim-quickrun", {
   \ "autoload": {
   \   "mappings": [['nxo', '<Plug>(quickrun)']]
@@ -355,9 +372,22 @@ nmap <Leader>r <Plug>(quickrun)
 let s:hooks = neobundle#get_hooks("vim-quickrun")
 function! s:hooks.on_source(bundle)
   let g:quickrun_config = {
-    \ "*": {"runmode": "async:remote:vimproc"}
+    \ "*": {"runmode": "async:remote:vimproc"},
+    \ "_": {"runner": "vimproc", "runner/vimproc/updatetime": 60},
     \ }
+  let g:quickrun_config['markdown'] = {
+    \ 'outputter': 'browser',
+    \ }
+  " Syntax Check
+  let g:quickrun_config['syntax/mast'] = {
+        \ 'runner': 'vimproc',
+        \ 'command': 'mast',
+        \ 'cmdopt': '-c',
+        \ 'exec': '%c %o %s:p',
+        \}
+  autocmd MyAutoCmd BufWritePost *.sin QuickRun -outputer quickfix -type syntax/mast
 endfunction
+" vim-quickrun }}}
 
 NeoBundleLazy 'majutsushi/tagbar', {
   \ "autload": {
@@ -373,6 +403,10 @@ NeoBundle "scrooloose/syntastic", {
   \   "mac": ["pip install pyflake", "npm -g install coffeelint"],
   \   "unix": ["pip install pyflake", "npm -g install coffeelint"],
   \ }}
+let g:syntastic_mode_map = {
+      \ 'mode': 'active',
+      \ 'passive_filetypes': ['python']
+      \ }
 
 " Python {{{
 NeoBundleLazy "lambdalisue/vim-django-support", {
@@ -416,31 +450,12 @@ endfunction
 " Programming }}}
 
 " Pandoc {{{
+NeoBundle 'tyru/open-browser.vim'
+NeoBundleLazy 'tpope/vim-markdown', {'autoload': { 'filetypes': 'markdown' }}
 NeoBundleLazy "vim-pandoc/vim-pandoc", {
   \ "autoload": {
   \   "filetypes": ["text", "pandoc", "markdown", "rst", "textile"],
   \ }}
-NeoBundleLazy "lambdalisue/shareboard.vim", {
-  \ "autoload": {
-  \   "commands": ["ShareboardPreview", "ShareboardCompile"],
-  \ },
-  \ "build": {
-  \   "mac": "pip install shareboard",
-  \   "unix": "pip install shareboard",
-  \ }}
-function! s:shareboard_settings()
-  nnoremap <buffer>[shareboard] <Nop>
-  nmap <buffer><Leader> [shareboard]
-  nnoremap <buffer><silent> [shareboard]v :ShareboardPreview<CR>
-  nnoremap <buffer><silent> [shareboard]c :ShareboardCompile<CR>
-endfunction
-autocmd MyAutoCmd FileType rst,text,pandoc,markdown,textile call s:shareboard_settings()
-let s:hooks = neobundle#get_hooks("shareboard.vim")
-function! s:hooks.on_source(bundle)
-  let g:shareboard_command = expand('~/.vim/shareboard/command.sh markdown+autolink_bare_uris+abbreviations')
-  " add ~/.cabal/bin to PATH
-  let $PATH=expand("~/.cabal/bin:") . $PATH
-endfunction
 " Pandoc }}}
 
 " Ramdisk {{{
@@ -487,6 +502,19 @@ NeoBundle 'kana/vim-fakeclip'
 if !s:is_darwin
   NeoBundle 'http://sip1.mu.renesas.com/git/misc/verilog_systemverilog.git'
 endif
+
+" Memolist {{{
+NeoBundle 'fuenor/qfixgrep.git'
+NeoBundle 'glidenote/memolist.vim'
+nnoremap <Leader>mn :MemoNew<CR>
+nnoremap <Leader>ml :MemoList<CR>
+nnoremap <Leader>mg :MemoGrep<CR>
+let g:memolist_path = "$HOME/Memo"
+let g:memolist_qfixgrep = 1
+let g:memolist_unite = 1
+let g:memolist_unite_source = "file_rec"
+let g:memolist_unite_option = "-start-insert"
+" Memolist }}}
 " Plugin }}}
 
 " Install missing plugins
@@ -518,7 +546,7 @@ set helplang=ja,en     " ヘルプの検索を 日本語->英語 に
 
 " OSのクリップボードを使用する
 if has('unnamedplus')
-  set clipboard& clipboard+=unnamedplus
+  set clipboard& clipboard+=unnamedplus,unnamed
 else
   set clipboard& clipboard+=unnamed
 endif
@@ -745,6 +773,17 @@ nnoremap <C-i><C-i> :<C-u>help<Space><C-r><C-w><Enter>
 command! -nargs=1 Gb :GrepBuffer <args>
 "カーソル下の単語をGrepBufferする
 nnoremap <C-g><C-b> :<C-u>GrepBuffer<Space><C-r><C-w><Enter>
+
+" vimgrepした結果を簡単に移動する
+nnoremap [q :cprevious<CR>    " 前へ
+nnoremap ]q :cnext<CR>        " 次へ
+nnoremap [Q :<C-u>cfirst<CR>  " 最初へ
+nnoremap ]Q :<C-u>clast<CR>   " 最後へ
+nnoremap <silent> <ESC><ESC><ESC> :vimgrep lsdmclsdmewjweojsdofsdcsdm %<CR>    " 無意味な文字列を検索してハイライトを消す
+
+" F5キーでコマンド履歴、F6キーで検索履歴を開く
+nnoremap <F5> <CR>q:
+nnoremap <F6> <CR>q/
 "  検索設定 Search }}}
 
 " --------------------------------------------------
@@ -932,6 +971,7 @@ set noimdisable
 set iminsert=0 imsearch=0
 set noimcmdline
 inoremap <silent> <ESC> <ESC>:set iminsert=0<CR>
+inoremap <silent> <C-[> <ESC>:set iminsert=0<CR>
 "
 " yeでそのカーソル位置にある単語をレジスタに追加
 nmap ye :let @"=expand("<cword>")<CR>
@@ -1017,3 +1057,58 @@ autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "norm
 autocmd BufNewFIle,BufRead *.scs set filetype=spectre
 autocmd BufNewFIle,BufRead *.sin set filetype=mast
 autocmd BufNewFIle,BufRead *.sv set filetype=verilog_systemverilog
+autocmd BufNewFile,BufRead *.md set filetype=markdown
+
+"" 対応するbegin~endの機能強化
+source $VIMRUNTIME/macros/matchit.vim
+NeoBundle 'vimtaku/hl_matchit.vim.git'
+let g:hl_matchit_enable_on_vim_startup = 1
+let g:hl_matchit_allow_ft = 'html\|vim\|ruby\|sh\|v'
+
+
+" タブの設定 {{{
+" Anywhere SID.
+function! s:SID_PREFIX()
+  return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeSID_PREFIX$')
+endfunction
+
+" Set tabline.
+function! s:my_tabline()  "{{{
+  let s = ''
+  for i in range(1, tabpagenr('$'))
+    let bufnrs = tabpagebuflist(i)
+    let bufnr = bufnrs[tabpagewinnr(i) - 1]  " first window, first appears
+    let no = i  " display 0-origin tabpagenr.
+    let mod = getbufvar(bufnr, '&modified') ? '!' : ' '
+    let title = fnamemodify(bufname(bufnr), ':t')
+    let title = '[' . title . ']'
+    let s .= '%'.i.'T'
+    let s .= '%#' . (i == tabpagenr() ? 'TabLineSel' : 'TabLine') . '#'
+    let s .= no . ':' . title
+    let s .= mod
+    let s .= '%#TabLineFill# '
+  endfor
+  let s .= '%#TabLineFill#%T%=%#TabLine#'
+  return s
+endfunction "}}}
+let &tabline = '%!'. s:SID_PREFIX() . 'my_tabline()'
+set showtabline=2 " 常にタブラインを表示
+
+" The prefix key.
+nnoremap    [Tag]   <Nop>
+nmap    t [Tag]
+" Tab jump
+" t1 で1番左のタブ、t2 で1番左から2番目のタブにジャンプ
+for n in range(1, 9)
+  execute 'nnoremap <silent> [Tag]'.n  ':<C-u>tabnext'.n.'<CR>'
+endfor
+
+" tc 新しいタブを一番右に作る
+nnoremap <silent> [Tag]c :tablast <bar> tabnew<CR>
+" tx タブを閉じる
+nnoremap <silent> [Tag]x :tabclose<CR>
+" tn 次のタブ
+nnoremap <silent> [Tag]n :tabnext<CR>
+" tp 前のタブ
+nnoremap <silent> [Tag]p :tabprevious<CR>
+"}}}
