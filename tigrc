@@ -17,6 +17,9 @@ set line-graphics = ascii
 ## diffの時に、空白の違いを無視
 set ignore-space = yes
 
+## 行の折り返しを行う
+set wrap-lines = yes
+
 # 表示 }}}
 
 # キーバインドの設定 {{{
