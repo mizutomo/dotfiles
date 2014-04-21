@@ -1,0 +1,38 @@
+# 表示 {{{
+
+## main viewの左端にコミットIDを表示しない
+set show-id = no
+
+set show-refs = true
+set show-rev-graph = true
+set show-date = local
+
+## 行番号を表示
+set show-line-numbers = yes
+set line-number-interval = 10
+
+## 表示を●に変更
+set line-graphics = ascii
+
+## diffの時に、空白の違いを無視
+set ignore-space = yes
+
+## 行の折り返しを行う
+set wrap-lines = yes
+
+# 表示 }}}
+
+# キーバインドの設定 {{{
+## デフォルトの bind generic G !git gc を無効化する
+bind generic G none
+
+## カーソルあるコミット上にブランチを作成
+bind main n !git checkout -b %(prompt) %(commit)
+
+## 任意のリビジョンを再現するために、checkoutする
+bind main C !?git checkout %(commit)
+
+## 任意のリビジョンをアーカイブする
+bind main a !?git archive -o %(prompt).tar.gz %(commit)
+
+# キーバインドの設定 }}}

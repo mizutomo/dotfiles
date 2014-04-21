@@ -53,7 +53,14 @@ fpath=(/svhome/takiyo/local/hp/share/zsh/site-functions ~/dotfiles/zsh/completio
 typeset -U path cdpath fpath manpath
 
 ## Prompt
-PROMPT='ZSH[%m]%# '
+local p_info=""
+if [ $USER = "mizukusa" ]; then
+  p_info="%F{green}%B%n%b%f@%m"
+else
+  p_info="%F{darkred}%B%n%b%f@%m"
+fi
+local p_mark="%B%(?,%F{green},%F{red})%(!,#,>)%f%b"
+PROMPT="$p_info $p_mark "
 RPROMPT=' %~'
 
 export LANG=ja_JP.UTF-8
