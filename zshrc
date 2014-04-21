@@ -160,3 +160,14 @@ unset SSH_ASKPASS
 
 # Ctrl-Sで画面がロックするのを防ぐ。
 stty stop undef
+
+# Cygwinの場合、cocotを介して、Windowsツールに繋ぐ
+if [ `uname -o` = "Cygwin" ]; then
+  alias ifconfig="cocot ipconfig"
+  alias ping="cocot ping"
+  alias arp="cocot arp"
+  alias nslookup="cocot nslookup"
+  alias traceroute="cocot tracert"
+  alias route="cocot route"
+  alias netstat="cocot netstat"
+fi
