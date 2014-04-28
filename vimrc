@@ -318,7 +318,7 @@ endif
 
 " NeoSnippet {{{
 NeoBundleLazy "Shougo/neosnippet.vim", {
-  \ "depends": ["honza/vim-snippets"],
+  \ "depends": ["honza/vim-snippets", "Shougo/neosnippet-snippets"],
   \ "autoload": {
   \   "insert": 1,
   \ }}
