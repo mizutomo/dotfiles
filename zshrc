@@ -153,7 +153,7 @@ else
   export LD_LIBRARY_PATH=/eda04/SIPDA/local/lib:/eda04/SIPDA/local/lib64
 fi
 
-export PATH=/eda04/SIPDA/local/bin:${PATH}
+export PATH=/eda04/SIPDA/local/bin:/usr/local/bin:${PATH}
 
 # CUDA
 if [ -d /svtool/cuda/41/cuda ]; then
@@ -173,7 +173,7 @@ unset SSH_ASKPASS
 stty stop undef
 
 # Cygwinの場合、cocotを介して、Windowsツールに繋ぐ
-if [ `uname -o` = "Cygwin" ]; then
+if [ `uname` = "Cygwin" ]; then
   alias ifconfig="cocot ipconfig"
   alias ping="cocot ping"
   alias arp="cocot arp"
@@ -182,3 +182,8 @@ if [ `uname -o` = "Cygwin" ]; then
   alias route="cocot route"
   alias netstat="cocot netstat"
 fi
+
+# Powerline
+source $HOME/bundle/powerline/powerline/bindings/zsh/powerline.zsh
+export TERM=xterm-256color
+
