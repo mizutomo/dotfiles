@@ -57,7 +57,14 @@ fpath=(/svhome/takiyo/local/hp/share/zsh/site-functions ~/dotfiles/zsh/completio
 typeset -U path cdpath fpath manpath
 
 ## Prompt
-PROMPT='ZSH[%m]%# '
+local p_info=""
+if [ $USER = "mizukusa" ]; then
+  p_info="%F{green}%B%n%b%f@%m"
+else
+  p_info="%F{darkred}%B%n%b%f@%m"
+fi
+local p_mark="%B%(?,%F{green},%F{red})%(!,#,>)%f%b"
+PROMPT="$p_info $p_mark "
 RPROMPT=' %~'
 
 export LANG=ja_JP.UTF-8
@@ -164,3 +171,14 @@ unset SSH_ASKPASS
 
 # Ctrl-Sで画面がロックするのを防ぐ。
 stty stop undef
+
+# Cygwinの場合、cocotを介して、Windowsツールに繋ぐ
+if [ `uname -o` = "Cygwin" ]; then
+  alias ifconfig="cocot ipconfig"
+  alias ping="cocot ping"
+  alias arp="cocot arp"
+  alias nslookup="cocot nslookup"
+  alias traceroute="cocot tracert"
+  alias route="cocot route"
+  alias netstat="cocot netstat"
+fi
