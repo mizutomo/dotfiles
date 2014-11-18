@@ -42,7 +42,9 @@ if has('vim_starting')
   else
     execute "set runtimepath+=" . s:neobundle_root
   endif
-  call neobundle#rc(s:bundle_root)
+  call neobundle#begin(s:bundle_root)
+  NeoBundleFetch 'Shougo/neobundle.vim'
+  call neobundle#end()
 endif
 " }}}
 
