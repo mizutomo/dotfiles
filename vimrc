@@ -400,15 +400,15 @@ NeoBundleLazy 'majutsushi/tagbar', {
   \ }}
 nmap <Leader>t :TagbarToggle<CR>
 
-NeoBundle "scrooloose/syntastic", {
-  \ "build": {
-  \   "mac": ["pip install pyflake", "npm -g install coffeelint"],
-  \   "unix": ["pip install pyflake", "npm -g install coffeelint"],
-  \ }}
-let g:syntastic_mode_map = {
-      \ 'mode': 'active',
-      \ 'passive_filetypes': ['python']
-      \ }
+"NeoBundle "scrooloose/syntastic", {
+"  \ "build": {
+"  \   "mac": ["pip install pyflake", "npm -g install coffeelint"],
+"  \   "unix": ["pip install pyflake", "npm -g install coffeelint"],
+"  \ }}
+"let g:syntastic_mode_map = {
+"      \ 'mode': 'active',
+"      \ 'passive_filetypes': ['python']
+"      \ }
 
 " Python {{{
 NeoBundleLazy "lambdalisue/vim-django-support", {
