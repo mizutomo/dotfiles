@@ -59,9 +59,9 @@ typeset -U path cdpath fpath manpath
 ## Prompt
 local p_info=""
 if [ $USER = "mizukusa" ]; then
-  p_info="%F{green}%B%n%b%f@%m"
+  p_info="%F{green}%B%n%b%f"
 else
-  p_info="%F{darkred}%B%n%b%f@%m"
+  p_info="%F{darkred}%B%n%b%f"
 fi
 local p_mark="%B%(?,%F{green},%F{red})%(!,#,>)%f%b"
 PROMPT="$p_info $p_mark "
